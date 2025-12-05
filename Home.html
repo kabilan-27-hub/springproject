@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Book Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .navbar { background-color: #343a40 !important; }
+    .navbar-brand, .nav-link, .cart-count { color: white !important; }
+    .card { transition: transform 0.3s ease-in-out; }
+    .card:hover { transform: scale(1.05); }
+    footer { background: #343a40; color: white; padding: 15px; text-align: center; margin-top: 40px; }
+    .cart-icon { position: relative; }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background: red;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+      
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="home.html">BookStore</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+              data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="categories.html">Categories</a></li>
+          <li class="nav-item"><a class="nav-link" href="login.html">login</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+    
+           <li class="nav-item">
+            <a class="nav-link" href="register.html">Register</a>
+          </li>
+          <li class="nav-item cart-icon">
+            <a class="nav-link" href="cart.html">🛒 Cart <span id="cart-count" class="cart-count">0</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+
+  
+
+<div class="container-fluid text-center my-5 py-5" style="background-color: rgb(8, 147, 201); border-radius: 12px;">
+  <h1 class="display-4 fw-bold text-white" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+    Welcome to the StoryTeller Book Store
+  </h1>
+  <p class="lead text-white" style="font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.2);">
+    Find your favorite books at the best prices!
+  </p>
+  <a href="#book-list" class="btn btn-dark btn-lg shadow">📚 Shop Now</a>
+</div>
+
+  <div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-10"> <!-- 🔹 Increased width from 6 → 8 -->
+      <input type="text" id="search" class="form-control form-control-lg text-center"
+             placeholder="🔍 Search for a book...">
+    </div>
+  </div>
+</div>
+      <div class="col-md-5">
+         <div class="row justify-content-center"></div>
+        <select id="category-filter" class="form-select">
+          <option value="all">All Categories</option>
+          <option value="fiction">Fiction</option>
+          <option value="history">History</option>
+          <option value="biography">Biography</option>
+          <option value="education">Education</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container my-5">
+    <h2 class="text-center mb-4">Featured Books</h2>
+    <div class="row g-4" id="book-list"></div>
+  </div>
+
+ 
+
+
+  <footer>
+    <p>&copy; 2025 Online Book Store | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const books = [
+      { id: 1, title: "The Tiger", desc: "Tigers The Ultimate Tiger Book for Kids: 100+ Amazing Tiger Facts, Photos, Quiz & More: 19 (Animal Books for Kids) Hardcover – Import, 21 May 2023", price: 90, category: "fiction", img: "https://m.media-amazon.com/images/I/61yLmOwXQ+L._UF1000,1000_QL80_.jpg" },
+      { id: 2, title: "the jungle ", desc: "A journey through history and culture.", price: 110, category: "history", img: "https://m.media-amazon.com/images/M/MV5BNDM1OWI1MzItN2ZlNi00MjMyLTg5ZGItYjgwYTdhOTY3ZjhkXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" },
+      { id: 3, title: "Scarface", desc: "Learn something new with this great read.", price: 150, category: "education", img: "https://i.pinimg.com/736x/9e/cc/4f/9ecc4f79036d967cb659e54de0166ed6.jpg" },
+      { id: 4, title: "The Universe", desc: " Images of the Universe Paperback – Import, 21 November 1991desc by Carole Stott (Editor)", price: 200, category: "biography" ,img: "https://m.media-amazon.com/images/I/91cEqxAsRnL._UF1000,1000_QL80_.jpg" },
+      { id: 5, title: "The Alchemist", desc: "A novel by Paulo Coelho that tells the mystical story of Santiago, an Andalusian shepherd.", price: 250, category: "fiction", img: "https://m.media-amazon.com/images/I/51Z0nLAfLmL._SX320_BO1,204,203,200_.jpg" },
+      { id: 6, title: "Sapiens", desc: "A Brief History of Humankind by Yuval Noah Harari", price: 300, category: "history", img: "https://m.media-amazon.com/images/I/61i4k7DWNFL._UF1000,1000_QL80_.jpg" },
+      { id: 7, title: "Steve Jobs", desc: "A biography of Steve Jobs by Walter Isaacson", price: 350, category: "biography", img: "https://m.media-amazon.com/images/I/51v5ZpFyaFL._SX324_BO1,204,203,200_.jpg" },
+      { id: 8, title: "Educated", desc: "A Memoir by Tara Westover", price: 400, category: "education", img: "https://m.media-amazon.com/images/I/81WojUxbbFL.jpg" },
+      { id: 9, title: "1984", desc: "A dystopian novel by George Orwell", price: 180, category: "fiction", img: "https://m.media-amazon.com/images/I/71kxa1-0mfL.jpg" },
+      { id: 10, title: "Guns, Germs, and Steel", desc: "The Fates of Human Societies by Jared Diamond", price: 220, category: "history", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZmq9ruYo-MB83sAqAXdnkSRA8vKK9U4PxYw&s" },
+      { id: 11, title: "Becoming", desc: "A Memoir by Michelle Obama", price: 320, category: "biography", img: "https://m.media-amazon.com/images/I/81h2gWPTYJL.jpg" },
+      { id: 12, title: "The Power of Habit", desc: "Why We Do What We Do in Life and Business by Charles Duhigg", price: 280, category: "education", img: "https://rukminim2.flixcart.com/image/704/844/l1xwqkw0/book/4/l/e/the-power-of-habit-original-imagddzgtaj6a5uh.jpeg?q=90&crop=false" },
+      { id: 13, title: "The Great Gatsby", desc: "A novel by F. Scott Fitzgerald", price: 160, category: "fiction", img: "https://m.media-amazon.com/images/I/81af+MCATTL.jpg" },
+      { id: 14, title: "The Wright Brothers", desc: "A Biography by David McCullough", price: 240, category: "biography", img: "https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781471150371/wright-brothers-9781471150371_hr.jpg" },
+      { id: 15, title: "Thinking, Fast and Slow", desc: "A book by Daniel Kahneman", price: 260, category: "education", img: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1317793965i/11468377.jpg" },
+      { id: 16, title: "The Catcher in the Rye", desc: "A novel by J.D. Salinger", price: 140, category: "fiction", img: "https://m.media-amazon.com/images/I/81OthjkJBuL.jpg" },
+      { id: 17, title: "The Immortal Life of Henrietta Lacks", desc: "A Biography by Rebecca Skloot", price: 230, category: "biography", img: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327878144i/6493208.jpg" },
+      { id: 18, title: "The Gene: An Intimate History", desc: "A book by Siddhartha Mukherjee", price: 290, category: "education", img: "https://m.media-amazon.com/images/I/71HcXS1+R-L.jpg" },
+      { id: 19, title: "To Kill a Mockingbird", desc: "A novel by Harper Lee", price: 170, category: "fiction", img: "https://cdn.britannica.com/21/182021-050-666DB6B1/book-cover-To-Kill-a-Mockingbird-many-1961.jpg" },
+      { id: 20, title: "Alexander Hamilton", desc: "A Biography by Ron Chernow", price: 310, category: "biography", img: "https://m.media-amazon.com/images/I/71LXIqAyn+L.jpg" },
+      { id: 21, title: "A Short History of Nearly Everything", desc: "A book by Bill Bryson", price: 270, category: "education", img: "https://m.media-amazon.com/images/I/71yt6mN5HuL.jpg" },
+      { id: 22, title: "The Hobbit", desc: "A fantasy novel by J.R.R. Tolkien", price: 200, category: "fiction", img: "https://m.media-amazon.com/images/I/91b0C2YNSrL.jpg" },
+      { id: 23, title: "Educated", desc: "A Memoir by Tara Westover", price: 400, category: "education", img: "https://m.media-amazon.com/images/I/81WojUxbbFL.jpg" },
+ 
+      { id: 24, title: "The Power of Habit", desc: "Why We Do What We Do in Life and Business by Charles Duhigg", price: 280, category: "education", img: "https://rukminim2.flixcart.com/image/704/844/l1xwqkw0/book/4/l/e/the-power-of-habit-original-imagddzgtaj6a5uh.jpeg?q=90&crop=false" },
+      { id: 25 , title: "ajaraja Chola ", desc: ": Interplay Between an Imperial Regime and Productive Forces of Society", price: 700, category: "history", img: "https://m.media-amazon.com/images/I/81VTezDHIgL.jpg" },
+      { id: 26 , title: "Empire of the Cholas", desc: "FREE delivery Sunday, 21 September on your first order. Order within 20 hrs 39 mins. Details", price: 800, category: "history", img: "https://m.media-amazon.com/images/I/91bWZiwDZPL._SL1500_.jpg" },
+      { id: 27 , title: "Nine must-read books on Indian history | Times of India", desc: "must-read books on Indian history | Times of India", price: 350, category: "history", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCsBnBzyT3GCM_dEDI9b8Bzep92BB0VH7-fQ&s" },
+      { id: 28 , title: "Famous Historical Stories of India eBook : Vishwanath: Amazon.in: Kindle Store", desc: "Vishwanath: Amazon.in: Kindle Store", price: 79, category: "history", img: "https://m.media-amazon.com/images/I/A1q117Kx-FL._UF1000,1000_QL80_.jpg" },
+      
+    ];
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const bookList = document.getElementById("book-list");
+
+
+    function renderBooks(filterText = "", category = "all") {
+      bookList.innerHTML = "";
+      const filteredBooks = books.filter(book => {
+        const matchesSearch = book.title.toLowerCase().includes(filterText.toLowerCase());
+        const matchesCategory = category === "all" || book.category === category;
+        return matchesSearch && matchesCategory;
+      });
+      
+
+      filteredBooks.forEach(book => {
+  bookList.innerHTML += `
+    <div class="col-md-3">
+      <div class="card shadow-sm h-100">
+        <img src="${book.img}" class="card-img-top" alt="${book.title}">
+        <div class="card-body">
+          <h5 class="card-title">${book.title}</h5>
+          <p class="card-text">${book.desc}</p>
+          <p><strong>Price: $${book.price}</strong></p>
+        </div>
+        <div class="card-footer bg-transparent border-0 text-center">
+          <!-- Add to Cart (stay on page) -->
+          <button class="btn btn-warning me-2" onclick="addToCart(${book.id}, false)">
+            🛒 Add to Cart
+          </button>
+          <!-- Buy Now (redirect to cart) -->
+          <button class="btn btn-success" onclick="addToCart(${book.id}, true)">
+            ⚡ Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+});
+    }
+
+
+   function addToCart(id, redirect = false) {
+  const book = books.find(b => b.id === id);
+  const existing = cart.find(item => item.id === id);
+
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...book, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+
+  // ✅ Redirect to cart.html if called with "true"
+  if (redirect) {
+    window.location.href = "cart.html";
+  }
+}
+
+    function renderCart() {
+      const cartItems = document.getElementById("cart-items");
+      const cartTable = document.getElementById("cart-table");
+      const emptyCart = document.getElementById("empty-cart");
+
+      cartItems.innerHTML = "";
+      let total = 0;
+      let totalItems = 0;
+
+      if (cart.length === 0) {
+        cartTable.classList.add("d-none");
+        emptyCart.style.display = "block";
+      } else {
+        cartTable.classList.remove("d-none");
+        emptyCart.style.display = "none";
+      }
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        totalItems += item.qty;
+        cartItems.innerHTML += `
+          <tr>
+            <td>${item.title}</td>
+            <td>$${item.price}</td>
+            <td><input type="number" value="${item.qty}" min="1" style="width:60px" onchange="updateQty(${item.id}, this.value)"></td>
+            <td>$${itemTotal}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="removeFromCart(${item.id})">Remove</button></td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("cart-total").innerText = `Total: $${total}`;
+      document.getElementById("cart-count").innerText = totalItems;
+    }
+
+    function updateQty(id, qty) {
+      const item = cart.find(i => i.id === id);
+      item.qty = parseInt(qty);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+
+    function removeFromCart(id) {
+      cart = cart.filter(item => item.id !== id);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    
+    function checkout() {
+      alert("Thank you for your purchase! 🎉");
+      cart = [];
+      localStorage.removeItem("cart");
+      renderCart();
+    }
+    document.getElementById("search").addEventListener("input", e => {
+      renderBooks(e.target.value, document.getElementById("category-filter").value);
+    });
+
+    document.getElementById("category-filter").addEventListener("change", e => {
+      renderBooks(document.getElementById("search").value, e.target.value);
+    });
+
+ 
+    renderBooks();
+    renderCart();
+    
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+  <!-- Cart Sidebar -->
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" class="position-fixed top-0 end-0 bg-white border-start shadow-lg" style="width: 300px; height: 100%; overflow-y: auto; display: none; z-index: 1050;">
+  <div class="p-3">
+    <h5>🛒 Shopping Cart</h5>
+    <button class="btn btn-sm btn-outline-secondary mb-3" onclick="toggleCart()">Close</button>
+    <div id="cart-items-sidebar"></div>
+    <hr>
+    <p><strong>Total: $<span id="cart-total-sidebar">0</span></strong></p>
+    <button class="btn btn-success w-100" onclick="goToCartPage()">Checkout</button>
+  </div>
+</div>
+
+<!-- Cart button fixed at bottom-right corner -->
+<button class="btn btn-primary position-fixed" style="bottom: 20px; right: 20px; z-index: 1040;" onclick="goToCartPage()">
+  🛒 Cart (<span id="cart-count-sidebar">0</span>)
+</button>
+
+<!-- Cart toggle button (fixed at bottom-right corner) -->
+<button class="btn btn-primary position-fixed" style="bottom: 20px; right: 20px; z-index: 1040;" onclick="toggleCart()">
+  🛒 Cart (<span id="cart-count-sidebar">0</span>)
+</button>
+
+</body>
+</html>
